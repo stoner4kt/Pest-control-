@@ -1,13 +1,18 @@
+const servicesGrid = document.querySelector(".services-grid");
+
+
 // Initialize GSAP
 gsap.registerPlugin(ScrollTrigger);
 
 // Services Data
+// Update services data to include image paths
 const services = [
     {
         id: 1,
         title: "Whole House Fumigation",
         price: "R850",
         icon: "🏠",
+        image: "images/house.jpeg",
         color: "#2a6e3f",
         features: [
             "Complete property treatment",
@@ -21,6 +26,7 @@ const services = [
         title: "Bed Bugs Treatment",
         price: "R750",
         icon: "🛏️",
+        image: "images/bedbugs.jpeg",
         color: "#e74c3c",
         features: [
             "Heat treatment or chemical",
@@ -33,7 +39,8 @@ const services = [
         id: 3,
         title: "Cockroaches Elimination",
         price: "R650",
-        icon: "🐜",
+        icon: "🪳",
+        image: "images/cockroaches.jpeg",
         color: "#8e44ad",
         features: [
             "Bait & spray treatment",
@@ -47,6 +54,7 @@ const services = [
         title: "Rats/Mice Control",
         price: "R600",
         icon: "🐭",
+        image: "images/rat&mice.jpeg",
         color: "#34495e",
         features: [
             "Humane trapping methods",
@@ -60,6 +68,7 @@ const services = [
         title: "Ants Extermination",
         price: "R650",
         icon: "🐜",
+        image: "images/ants.jpeg",
         color: "#d35400",
         features: [
             "Colony elimination",
@@ -73,6 +82,7 @@ const services = [
         title: "Yard Spraying",
         price: "R800",
         icon: "🌳",
+        image: "images/yard.jpeg",
         color: "#27ae60",
         features: [
             "Mosquito & tick control",
@@ -83,16 +93,7 @@ const services = [
     }
 ];
 
-// DOM Elements
-const servicesGrid = document.querySelector('.services-grid');
-const contactForm = document.getElementById('contactForm');
-const successModal = document.getElementById('successModal');
-const closeModal = document.querySelector('.close-modal');
-const hamburger = document.querySelector('.hamburger');
-const navMenu = document.querySelector('.nav-menu');
-const navLinks = document.querySelectorAll('.nav-link');
-
-// Initialize Services
+// Update initializeServices function to include images
 function initializeServices() {
     servicesGrid.innerHTML = '';
     
@@ -101,6 +102,13 @@ function initializeServices() {
         serviceCard.className = 'service-card';
         
         serviceCard.innerHTML = `
+            <div class="service-image-container">
+                <img src="${service.image}" 
+                     alt="${service.title}" 
+                     class="service-image image-loading"
+                     onload="this.classList.remove('image-loading'); this.classList.add('loaded')"
+                     onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=\'service-icon-large\'>${service.icon}</div>'">
+            </div>
             <div class="service-header" style="background-color: ${service.color}">
                 <div class="service-icon">${service.icon}</div>
                 <h3 class="service-title">${service.title}</h3>
@@ -120,196 +128,28 @@ function initializeServices() {
     });
 }
 
-// Initialize GSAP Animations (only for subtle effects, not hiding content)
-function initializeAnimations() {
-    // Hero section animations - subtle entrance
-    gsap.to('.hero-title', {
-        duration: 1,
-        y: 0,
-        opacity: 1,
-        delay: 0.3,
-        ease: "power2.out"
-    });
+// Add image lazy loading function
+function lazyLoadImages() {
+    const images = document.querySelectorAll('img[data-src]');
     
-    gsap.to('.hero-subtitle', {
-        duration: 1,
-        y: 0,
-        opacity: 1,
-        delay: 0.5,
-        ease: "power2.out"
-    });
-    
-    gsap.to('.hero-buttons', {
-        duration: 1,
-        y: 0,
-        opacity: 1,
-        delay: 0.7,
-        ease: "power2.out"
-    });
-    
-    gsap.to('.floating-shield', {
-        duration: 1.5,
-        opacity: 0.2,
-        delay: 1,
-        ease: "power2.out"
-    });
-    
-    // Service cards animations on scroll
-    gsap.utils.toArray('.service-card').forEach((card, i) => {
-        ScrollTrigger.create({
-            trigger: card,
-            start: "top 80%",
-            onEnter: () => {
-                gsap.to(card, {
-                    y: 0,
-                    opacity: 1,
-                    duration: 0.6,
-                    delay: i * 0.1,
-                    ease: "power2.out"
-                });
-            },
-            onLeaveBack: () => {
-                gsap.to(card, {
-                    y: 20,
-                    opacity: 0,
-                    duration: 0.3
-                });
+    const imageObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const img = entry.target;
+                img.src = img.dataset.src;
+                img.classList.add('loaded');
+                img.removeAttribute('data-src');
+                observer.unobserve(img);
             }
         });
+    }, {
+        rootMargin: '50px' // Start loading 50px before image enters viewport
     });
     
-    // Feature animations on scroll
-    gsap.utils.toArray('.feature').forEach((feature, i) => {
-        ScrollTrigger.create({
-            trigger: feature,
-            start: "top 80%",
-            onEnter: () => {
-                gsap.to(feature, {
-                    y: 0,
-                    opacity: 1,
-                    duration: 0.6,
-                    delay: i * 0.15,
-                    ease: "power2.out"
-                });
-            }
-        });
-    });
-    
-    // Form animation on scroll
-    ScrollTrigger.create({
-        trigger: '.contact-form',
-        start: "top 80%",
-        onEnter: () => {
-            gsap.to('.contact-form', {
-                x: 0,
-                opacity: 1,
-                duration: 0.8,
-                ease: "power2.out"
-            });
-        }
-    });
-    
-    // Contact info animation on scroll
-    ScrollTrigger.create({
-        trigger: '.contact-info',
-        start: "top 80%",
-        onEnter: () => {
-            gsap.to('.contact-info', {
-                x: 0,
-                opacity: 1,
-                duration: 0.8,
-                ease: "power2.out"
-            });
-        }
-    });
+    images.forEach(img => imageObserver.observe(img));
 }
 
-// Form Submission
-function handleFormSubmit(e) {
-    e.preventDefault();
-    
-    // Get form data
-    const formData = {
-        name: document.getElementById('name').value,
-        email: document.getElementById('email').value,
-        phone: document.getElementById('phone').value,
-        address: document.getElementById('address').value,
-        service: document.getElementById('service').value,
-        message: document.getElementById('message').value,
-        timestamp: new Date().toISOString()
-    };
-    
-    // In a real application, you would send this data to your server
-    console.log('Form submitted:', formData);
-    
-    // Save to localStorage (simulating database storage)
-    const submissions = JSON.parse(localStorage.getItem('contactSubmissions') || '[]');
-    submissions.push(formData);
-    localStorage.setItem('contactSubmissions', JSON.stringify(submissions));
-    
-    // Show success modal
-    successModal.style.display = 'flex';
-    document.body.style.overflow = 'hidden';
-    
-    // Reset form
-    contactForm.reset();
-    
-    // Animate modal appearance
-    gsap.fromTo('.modal-content', 
-        { scale: 0.8, opacity: 0 },
-        { duration: 0.5, scale: 1, opacity: 1, ease: 'back.out(1.7)' }
-    );
-}
-
-// Mobile Navigation Toggle
-function toggleMobileMenu() {
-    hamburger.classList.toggle('active');
-    navMenu.classList.toggle('active');
-    
-    // Prevent body scroll when menu is open
-    if (navMenu.classList.contains('active')) {
-        document.body.style.overflow = 'hidden';
-    } else {
-        document.body.style.overflow = 'auto';
-    }
-}
-
-// Close mobile menu when clicking a link
-function closeMobileMenu() {
-    hamburger.classList.remove('active');
-    navMenu.classList.remove('active');
-    document.body.style.overflow = 'auto';
-}
-
-// Pre-fill service if clicked from service card
-function handleServiceCardClick(e) {
-    if (e.target.classList.contains('service-btn')) {
-        const serviceName = e.target.getAttribute('data-service');
-        const serviceSelect = document.getElementById('service');
-        
-        // Find the matching option
-        for (let option of serviceSelect.options) {
-            if (option.text.includes(serviceName)) {
-                option.selected = true;
-                break;
-            }
-        }
-        
-        // Close mobile menu if open
-        closeMobileMenu();
-        
-        // Scroll to contact form
-        document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
-    }
-}
-
-// Close modal
-function closeSuccessModal() {
-    successModal.style.display = 'none';
-    document.body.style.overflow = 'auto';
-}
-
-// Event Listeners
+// Update DOMContentLoaded event listener
 document.addEventListener('DOMContentLoaded', () => {
     // Initialize services
     initializeServices();
@@ -317,97 +157,101 @@ document.addEventListener('DOMContentLoaded', () => {
     // Initialize animations
     initializeAnimations();
     
-    // Form submission
-    contactForm.addEventListener('submit', handleFormSubmit);
+    // Initialize lazy loading for images
+    lazyLoadImages();
     
-    // Modal close
-    closeModal.addEventListener('click', closeSuccessModal);
+    // Initialize navbar functionality
+    initializeNavbar();
     
-    // Close modal when clicking outside
-    window.addEventListener('click', (e) => {
-        if (e.target === successModal) {
-            closeSuccessModal();
-        }
+    // Preload important images
+    preloadImages([
+        'images/technician.jpg',
+        'images/hero-bg.jpg',
+        'images/before-after.jpg'
+    ]);
+});
+
+// Navbar functionality
+function initializeNavbar() {
+    const hamburger = document.querySelector('.hamburger');
+    const navMenu = document.querySelector('.nav-menu');
+    const navLinks = document.querySelectorAll('.nav-link');
+    
+    // Toggle mobile menu
+    hamburger.addEventListener('click', () => {
+        hamburger.classList.toggle('active');
+        navMenu.classList.toggle('active');
+        document.body.style.overflow = navMenu.classList.contains('active') ? 'hidden' : '';
     });
     
-    // Mobile menu
-    hamburger.addEventListener('click', toggleMobileMenu);
-    
-    // Close mobile menu when clicking links
+    // Close mobile menu when clicking a link
     navLinks.forEach(link => {
-        link.addEventListener('click', closeMobileMenu);
-    });
-    
-    // Service card clicks
-    servicesGrid.addEventListener('click', handleServiceCardClick);
-    
-    // Close modal with Escape key
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && successModal.style.display === 'flex') {
-            closeSuccessModal();
-        }
-    });
-    
-    // Active navigation on scroll
-    const sections = document.querySelectorAll('section[id]');
-    
-    window.addEventListener('scroll', () => {
-        const scrollY = window.pageYOffset;
-        
-        sections.forEach(section => {
-            const sectionHeight = section.offsetHeight;
-            const sectionTop = section.offsetTop - 100;
-            const sectionId = section.getAttribute('id');
-            const correspondingLink = document.querySelector(`.nav-link[href="#${sectionId}"]`);
-            
-            if (correspondingLink) {
-                if (scrollY > sectionTop && scrollY <= sectionTop + sectionHeight) {
-                    correspondingLink.classList.add('active');
-                } else {
-                    correspondingLink.classList.remove('active');
-                }
-            }
+        link.addEventListener('click', () => {
+            hamburger.classList.remove('active');
+            navMenu.classList.remove('active');
+            document.body.style.overflow = '';
         });
     });
-});
-
-// Form validation
-const inputs = document.querySelectorAll('input, textarea, select');
-inputs.forEach(input => {
-    input.addEventListener('blur', (e) => {
-        if (e.target.value.trim() === '' && e.target.required) {
-            e.target.style.borderColor = '#e74c3c';
-            e.target.style.boxShadow = '0 0 0 3px rgba(231, 76, 60, 0.1)';
-        } else {
-            e.target.style.borderColor = '#ddd';
-            e.target.style.boxShadow = 'none';
+    
+    // Close mobile menu when clicking outside
+    document.addEventListener('click', (e) => {
+        if (!hamburger.contains(e.target) && !navMenu.contains(e.target)) {
+            hamburger.classList.remove('active');
+            navMenu.classList.remove('active');
+            document.body.style.overflow = '';
         }
     });
-    
-    input.addEventListener('input', (e) => {
-        if (e.target.value.trim() !== '') {
-            e.target.style.borderColor = '#2a6e3f';
-            e.target.style.boxShadow = '0 0 0 3px rgba(42, 110, 63, 0.1)';
-        }
-    });
-});
+}
 
-// Add active class to nav links based on scroll position
-window.addEventListener('scroll', () => {
-    const current = window.scrollY;
+// Initialize GSAP Animations
+function initializeAnimations() {
+    // Hero animation
+    gsap.from('.hero-title', {
+        opacity: 0,
+        y: 50,
+        duration: 1,
+        delay: 0.2
+    });
     
-    document.querySelectorAll('section').forEach(section => {
-        const sectionHeight = section.offsetHeight;
-        const sectionTop = section.offsetTop - 100;
-        const sectionId = section.getAttribute('id');
+    gsap.from('.hero-subtitle', {
+        opacity: 0,
+        y: 30,
+        duration: 1,
+        delay: 0.4
+    });
+    
+    gsap.from('.hero-buttons', {
+        opacity: 0,
+        y: 30,
+        duration: 1,
+        delay: 0.6
+    });
+    
+    gsap.from('.trust-indicators', {
+        opacity: 0,
+        y: 30,
+        duration: 1,
+        delay: 0.8
+    });
+}
+
+// Image preloading function
+function preloadImages(imageArray) {
+    imageArray.forEach(imageSrc => {
+        const img = new Image();
+        img.src = imageSrc;
+    });
+}
+
+// Handle image errors gracefully
+document.addEventListener('error', function(e) {
+    if (e.target.tagName === 'IMG') {
+        e.target.style.display = 'none';
+        const parent = e.target.parentElement;
         
-        if (current >= sectionTop && current < sectionTop + sectionHeight) {
-            document.querySelectorAll('.nav-link').forEach(link => {
-                link.classList.remove('active');
-                if (link.getAttribute('href') === `#${sectionId}`) {
-                    link.classList.add('active');
-                }
-            });
+        // Add fallback content
+        if (parent.classList.contains('service-image-container')) {
+            parent.innerHTML = '<div class="service-icon-large"><i class="fas fa-bug"></i></div>';
         }
-    });
-});
+    }
+}, true);

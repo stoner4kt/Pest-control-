@@ -3,19 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ProShield Pest Control | Professional Pest Elimination</title>
+    <title>GreenLeaf | Professional Pest Elimination</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🐜</text></svg>">
+    <!-- Add a real favicon -->
+    <link rel="icon" type="image/x-icon" href="images/favicon.ico">
+    <!-- Fallback if no favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🐜</text></svg>">
+    <script src="https://unpkg.com/gsap@3/dist/gsap.min.js"></script>
+<script src="https://unpkg.com/gsap@3/dist/ScrollTrigger.min.js"></script>
+
 </head>
 <body>
     <!-- Header & Navigation -->
     <header class="header">
         <nav class="navbar">
+            <!-- Logo with image option -->
             <div class="logo">
-                <span class="logo-icon">🛡️</span>
-                <span class="logo-text">ProShield<span class="logo-highlight">PestControl</span></span>
+                <div class="logo-image">
+                    <!-- Use text logo or image logo -->
+                    
+                    <img src="images/logo.png" alt="GreenLeaf Pest Control Logo" class="logo-img"> 
+                </div>
+               
             </div>
             <ul class="nav-menu">
                 <li class="nav-item"><a href="#home" class="nav-link">Home</a></li>
@@ -32,8 +43,11 @@
         </nav>
     </header>
 
-    <!-- Hero Section -->
+    <!-- Hero Section with Background Image -->
     <section id="home" class="hero">
+        <!-- Background image overlay -->
+        <div class="hero-bg-overlay"></div>
+        
         <div class="hero-content">
             <h1 class="hero-title">Professional Pest Control Solutions</h1>
             <p class="hero-subtitle">Safe, effective, and guaranteed pest elimination for your home and business</p>
@@ -41,10 +55,21 @@
                 <a href="#contact" class="btn btn-primary">Get Free Quote</a>
                 <a href="#services" class="btn btn-secondary">Our Services</a>
             </div>
-        </div>
-        <div class="hero-image">
-            <div class="floating-shield">
-                <i class="fas fa-shield-alt"></i>
+            
+            <!-- Trust indicators -->
+            <div class="trust-indicators">
+                <div class="trust-item">
+                    <i class="fas fa-users"></i>
+                    <span>500+ Happy Clients</span>
+                </div>
+                <div class="trust-item">
+                    <i class="fas fa-star"></i>
+                    <span>4.9/5 Rating</span>
+                </div>
+                <div class="trust-item">
+                    <i class="fas fa-clock"></i>
+                    <span>24/7 Emergency</span>
+                </div>
             </div>
         </div>
     </section>
@@ -53,17 +78,47 @@
     <section id="services" class="services">
         <div class="section-header">
             <h2 class="section-title">Our Pest Control Services</h2>
-            <p class="section-subtitle">Comprehensive solutions for all your pest problems</p>
+            <p class="section-subtitle">Comprehensive solutions for all your pest problems with guaranteed results</p>
         </div>
         <div class="services-grid">
             <!-- Services will be populated by JavaScript -->
         </div>
     </section>
 
+    
+
     <!-- About Section -->
     <section id="about" class="about">
         <div class="about-content">
             <h2 class="about-title">Why Choose ProShield?</h2>
+            
+            <!-- Before/After Comparison -->
+            <div class="comparison-section">
+                <div class="comparison-item">
+                    <div class="comparison-img before">
+                        <img src="images/bedbugs.jpeg" alt="Before Pest Treatment">
+                        <div class="comparison-label">Before</div>
+                    </div>
+                    <h3>Problem Identified</h3>
+                    <p>Our experts conduct thorough inspection to identify all pest issues.</p>
+                </div>
+                
+                <div class="comparison-item">
+                    <div class="comparison-icon">
+                        <i class="fas fa-arrow-right"></i>
+                    </div>
+                </div>
+                
+                <div class="comparison-item">
+                    <div class="comparison-img after">
+                        <img src="images/house.jpeg" alt="After Pest Treatment">
+                        <div class="comparison-label">After</div>
+                    </div>
+                    <h3>Problem Solved</h3>
+                    <p>Professional treatment ensures complete pest elimination.</p>
+                </div>
+            </div>
+            
             <div class="features">
                 <div class="feature">
                     <div class="feature-icon">
@@ -92,6 +147,69 @@
                     </div>
                     <h3>Guaranteed Results</h3>
                     <p>We stand behind our work with satisfaction guarantees</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials">
+        <div class="section-header">
+            <h2 class="section-title">What Our Clients Say</h2>
+            <p class="section-subtitle">Real feedback from satisfied customers</p>
+        </div>
+      <div class="testimonials-grid">
+            <div class="testimonial-card">
+                
+                <div class="testimonial-content">
+                    <div class="stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p class="testimonial-text">"ProShield eliminated our bed bug problem completely. Their technicians were professional, thorough, and the results were immediate. Highly recommend!"</p>
+                    <div class="testimonial-author">
+                        <h4>Sarah M.</h4>
+                        <p>Johannesburg</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="testimonial-card">
+                
+                <div class="testimonial-content">
+                    <div class="stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p class="testimonial-text">"The yard spraying service was fantastic. No more mosquitoes during our outdoor gatherings. The team was punctual and very knowledgeable."</p>
+                    <div class="testimonial-author">
+                        <h4>David K.</h4>
+                        <p>Sandton</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="testimonial-card">
+                
+                <div class="testimonial-content">
+                    <div class="stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p class="testimonial-text">"Finally got rid of the cockroach infestation in our restaurant kitchen. ProShield's eco-friendly solutions worked perfectly without affecting our business."</p>
+                    <div class="testimonial-author">
+                        <h4>Michael T.</h4>
+                        <p>Midrand</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -174,6 +292,14 @@
                         <p>Greater Johannesburg Area & Surroundings</p>
                     </div>
                 </div>
+                
+                <!-- Map placeholder -->
+                <div class="map-placeholder">
+                    <img src="images/rat&mice.jpeg" alt="Service Area" class="map-img">
+                    <div class="map-overlay">
+                        <p><i class="fas fa-map-pin"></i> Serving Johannesburg & Surrounding Areas</p>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -182,9 +308,19 @@
     <footer class="footer">
         <div class="footer-content">
             <div class="footer-logo">
-                <span class="logo-icon">🛡️</span>
-                <span class="logo-text">ProShield<span class="logo-highlight">PestControl</span></span>
-                <p>Professional pest elimination services you can trust.</p>
+                
+                <div class="logo">
+                <div class="logo-image">
+                    <!-- Use text logo or image logo -->
+                    
+                    <img src="images/logo.png" alt="GreenLeaf Pest Control Logo" class="logo-img"> 
+                    
+                    
+                    
+                </div>
+                
+                
+               
             </div>
             <div class="footer-links">
                 <h4>Quick Links</h4>
@@ -219,8 +355,28 @@
                 </div>
             </div>
         </div>
+        
+        <!-- Certifications Section -->
+        <div class="footer-certifications">
+            <h4>Our Certifications & Accreditations</h4>
+            <div class="certifications-grid">
+                <div class="cert-item">
+                    <img data-src="images/cert1.jpg" alt="Certification 1" class="cert-img lazy-load">
+                </div>
+                <div class="cert-item">
+                    <img data-src="images/cert2.jpg" alt="Certification 2" class="cert-img lazy-load">
+                </div>
+                <div class="cert-item">
+                    <img data-src="images/cert3.jpg" alt="Certification 3" class="cert-img lazy-load">
+                </div>
+                <div class="cert-item">
+                    <img data-src="images/cert4.jpg" alt="Certification 4" class="cert-img lazy-load">
+                </div>
+            </div>
+        </div>
+        
         <div class="footer-bottom">
-            <p>&copy; 2024 ProShield Pest Control. All rights reserved.</p>
+            <p>&copy; 2024 GreenLeaf Pest Control. All rights reserved.</p>
         </div>
     </footer>
 
@@ -232,6 +388,7 @@
                 <h2><i class="fas fa-check-circle"></i> Request Submitted!</h2>
             </div>
             <div class="modal-body">
+                <img src="images/success-icon.png" alt="Success" class="modal-icon">
                 <p>Thank you for your inquiry! We'll contact you within 24 hours to schedule your pest control service.</p>
                 <p>A confirmation email has been sent to your provided email address.</p>
             </div>
