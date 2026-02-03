@@ -148,7 +148,7 @@ h1, h2, h3, h4 {
 }
 
 .logo-img {
-    height: 60px;
+    height: 100px;
     width: auto;
     object-fit: contain;
     transition: var(--transition);
@@ -1227,7 +1227,7 @@ h1, h2, h3, h4 {
 @media (max-width: 768px) {
     /* Mobile Navigation */
     .logo-img {
-        height: 50px;
+        height: 70px;
     }
     
     .hamburger {
@@ -1451,7 +1451,7 @@ h1, h2, h3, h4 {
 
 @media (max-width: 480px) {
     .logo-img {
-        height: 45px;
+        height: 60px;
     }
     
     .hero {

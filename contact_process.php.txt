@@ -1,0 +1,51 @@
+<?php
+// ==============================
+// DATABASE CONFIG (PLACEHOLDERS)
+// ==============================
+$db_host = "localhost";
+$db_user = "DB_USERNAME";
+$db_pass = "DB_PASSWORD";
+$db_name = "DB_NAME";
+
+// ==============================
+$conn = new mysqli($db_host, $db_user, $db_pass, $db_name);
+if ($conn->connect_error) {
+    die("Database connection failed.");
+}
+
+// ==============================
+$name = trim($_POST['name']);
+$email = trim($_POST['email']);
+$phone = trim($_POST['phone']);
+$address = trim($_POST['address']);
+$service = isset($_POST['service']) ? implode(", ", $_POST['service']) : '';
+$service_date = $_POST['service_date'];
+$service_time = $_POST['service_time'];
+$message = trim($_POST['message']);
+
+// ==============================
+$sql = "INSERT INTO contact_requests 
+(name, email, phone, address, service, service_date, service_time, message)
+VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+
+$stmt = $conn->prepare($sql);
+$stmt->bind_param(
+    "ssssssss",
+    $name,
+    $email,
+    $phone,
+    $address,
+    $service,
+    $service_date,
+    $service_time,
+    $message
+);
+
+$stmt->execute();
+$stmt->close();
+$conn->close();
+
+// ==============================
+header("Location: thank-you.html");
+exit;
+?>
